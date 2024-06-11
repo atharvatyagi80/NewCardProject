@@ -42,13 +42,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">taskDescription</label>
-                    <textarea rows="6" class="form-control" placeholder="This task is all about..." aria-label="With textarea"></textarea>
+                    <textarea rows="6" class="form-control" placeholder="This task is all about..." aria-label="With textarea" id="taskDescription"></textarea>
                 </div>
               </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@
       <!--Card-->
 
       <section>
-        <div class="row ms-4 me-4">
+        <div class="row ms-4 me-4" id="taskContainerRow">
 
             <!--Card 1-->
             <div class="col-md-4 mt-4">
@@ -105,6 +105,7 @@
                         </button>
                     </div>
                     <div class="card-body flex-column justify-content-start">
+                        <h3 class="taskTitle">Task 1</h1>
                         <img class="image rounded" src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg">
                       <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                       <span class="badge text-bg-warning">Amazing</span>
@@ -114,6 +115,7 @@
                     </div>
                   </div>
             </div>
+            
     
             
         </div>
