@@ -1,7 +1,25 @@
-//creating taskContainer which imports parent element of HTMl
+//creating global array to store our task data
+const globalArray = [];
+
+
+//fucntion to link the stored data with cards
+const loadInitialTaskCard=()=>{
+    //accessing local storage
+    const getInitalData = localStorage.getItem("tasky");
+    //convert stringified object again to object
+    const {cards} = JSON.parse(getInitalData);
+    //map each value of globalArray to card
+    cards.map((cardObject)=>{
+        const createNewCard = newCard(cardObject);
+        taskContainer.insertAdjacentHTML("beforeend",createNewCard);
+        globalArray.push(cardObject);
+    });
+}
+
+//HTML Code Section
+//varaible getting parent element where we want to put our HTML code
 const taskContainer = document.querySelector("#taskContainerRow");
-console.log(taskContainer);
-//creating HTMl code to be exported in HTML
+//function call HTMl code
 const newCard=(
     {id,
     imageUrl,
@@ -31,8 +49,10 @@ const newCard=(
             </div>`
 
 
-
+//Save Changes function for save change button
 const saveChanges = ()=>{
+
+    //getting data that has been entered
     const taskData = {
         id: `${Date.now()}`,
         imageUrl:document.getElementById("imageUrl").value,
@@ -41,6 +61,18 @@ const saveChanges = ()=>{
         taskDescription: document.getElementById("taskDescription").value,
     };
 
+    //creating card through the data
     const createNewCard = newCard(taskData);
     taskContainer.insertAdjacentHTML("beforeend",createNewCard);
+
+    //saving data to local storage
+    //passing taskData as parameter to store it inside globalArray
+    globalArray.push(taskData);
+    //now storing globalArray inside local Storage by local storage API
+    //tasky is a key of key value pair
+    //we storing cards where each index of cards contains globalArray
+    //localStorage.setItem("tasky",{cards:globalArray});
+    //but we need to convert it to string as well
+    localStorage.setItem("tasky",JSON.stringify({cards:globalArray}));
+
 }
