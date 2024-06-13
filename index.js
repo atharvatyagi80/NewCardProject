@@ -1,13 +1,12 @@
 //creating global array to store our task data
-const globalArray = [];
+let globalArray = [];
 
 
 //fucntion to link the stored data with cards
 const loadInitialTaskCard=()=>{
-    //accessing local storage
-    const getInitalData = localStorage.getItem("tasky");
-    //convert stringified object again to object
-    const {cards} = JSON.parse(getInitalData);
+    //accessing local storage and converting stringified object again to normal object
+    const {cards} = JSON.parse(localStorage.tasky);
+    if(!cards) return;
     //map each value of globalArray to card
     cards.map((cardObject)=>{
         const createNewCard = newCard(cardObject);
@@ -32,8 +31,8 @@ const newCard=(
                         <button type="button" class="btn btn-outline-success">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-danger">
-                            <i class="fa-solid fa-trash"></i>
+                        <button type="button" class="btn btn-outline-danger" id=${id} onclick="deleteCard.apply(this,arguments)">
+                            <i class="fa-solid fa-trash"  id=${id}></i>
                         </button>
                     </div>
                     <div class="card-body flex-column justify-content-start">
@@ -76,3 +75,27 @@ const saveChanges = ()=>{
     localStorage.setItem("tasky",JSON.stringify({cards:globalArray}));
 
 }
+
+const deleteCard = (event) =>{
+    //the first step is to get the ID of the card
+    //the unique ID have to be there at the tag we want to access
+    event=window.event;
+    const targetId = event.target.id;
+    const tagname = event.target.tagName;
+    //searching ID and remove matches
+    const newUpdatedArray = globalArray.filter(
+        (cardObject) => cardObject.id!==targetId
+    );
+    //updating global array inside local storage
+    globalArray=newUpdatedArray;
+    localStorage.setItem("tasky", JSON.stringify({cards:globalArray}));
+    //removing the card
+    if(tagname=="BUTTON"){
+        return taskContainer.removeChild(
+            event.target.parentNode.parentNode.parentNode
+        );
+    }
+    return taskContainer.removeChild(
+        event.target.parentNode.parentNode.parentNode.parentNode
+    );
+};
