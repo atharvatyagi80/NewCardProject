@@ -108,7 +108,7 @@ const newModal=(
     taskTitle,
     taskType,
     taskDescription}
-) =>`<div>
+) =>`<div class="modalExist">
         <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Task</h1>
@@ -161,10 +161,14 @@ const editCard= (event) =>{
             };
         }
     })
+
     console.log(editCardData);
 
-    const modalExist = document.querySelector("#modalDialog");
+    const modalExist = document.querySelector(".modalExist");
     console.log(modalExist);
+    if(modalExist){
+        modalExist.remove();
+    }
     
     const createModalContainer = newModal(editCardData);
     modalContainer.insertAdjacentHTML("afterend", createModalContainer);
