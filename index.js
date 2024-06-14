@@ -116,27 +116,31 @@ const newModal=(
         </div>
         <div class="modal-body">
             <form>
+                <div class="mb-2">
+                    <lavel for="exampleInputEmail1" class="form-label">ID</label>
+                    <input type="text" id="showidValue" value=${id}>
+                </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Image URL</label>
-                  <input type="email" placeholder="https://example.com/image1.png" class="form-control" id="imageUrl" aria-describedby="emailHelp" value=${imageUrl}>
+                  <input type="email" placeholder="https://example.com/image1.png" class="form-control" id="eimageUrl" aria-describedby="emailHelp" value=${imageUrl}>
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label" >Task Title</label>
-                  <input type="email" placeholder="Task1" class="form-control" id="taskTitle" aria-describedby="emailHelp" value=${taskTitle}>
+                  <input type="email" placeholder="Task1" class="form-control" id="etaskTitle" aria-describedby="emailHelp" value=${taskTitle}>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Task Type</label>
-                    <input type="email" placeholder="Work" class="form-control" id="taskType" aria-describedby="emailHelp" value=${taskType}>
+                    <input type="email" placeholder="Work" class="form-control" id="etaskType" aria-describedby="emailHelp" value=${taskType}>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">taskDescription</label>
-                    <textarea rows="6" class="form-control" placeholder="This task is all about..." aria-label="With textarea" id="taskDescription">${taskDescription}</textarea>
+                    <textarea rows="6" class="form-control" placeholder="This task is all about..." aria-label="With textarea" id="etaskDescription">${taskDescription}</textarea>
                 </div>
               </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveChanges()">Save changes</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="editChanges.apply(this,arguments)">Save changes</button>
         </div>
       </div>
       </div>`
@@ -163,16 +167,55 @@ const editCard= (event) =>{
     })
 
     console.log(editCardData);
-
+    console.log(targetId);
+    const tagname=event.target.tagName;
+    console.log(tagname);
     const modalExist = document.querySelector(".modalExist");
     console.log(modalExist);
     if(modalExist){
         modalExist.remove();
     }
-    
     const createModalContainer = newModal(editCardData);
     modalContainer.insertAdjacentHTML("afterend", createModalContainer);
+};
 
+const editChanges=()=>{
+    const editTaskData = {
+        id: document.getElementById("showidValue").value,
+        imageUrl:document.getElementById("eimageUrl").value,
+        taskTitle: document.getElementById("etaskTitle").value,
+        taskType: document.getElementById("etaskType").value,
+        taskDescription: document.getElementById("etaskDescription").value,
+    };
+    
+    console.log(editTaskData.id);
+    console.log(editTaskData.taskTitle);
+    const targetId=editTaskData.id;
+    removeElementById(targetId);
+    
+    const tagname = event.target.tagName;
+    //searching ID and remove matches
+    const newUpdatedArray = globalArray.filter(
+        (cardObject) => cardObject.id!==targetId
+    );
+    //updating global array inside local storage
+    globalArray=newUpdatedArray;
+    localStorage.setItem("tasky", JSON.stringify({cards:globalArray}));
+    //removing the card
+    
+    //entering new card
+    const createNewCard = newCard(editTaskData);
+    taskContainer.insertAdjacentHTML("beforeend",createNewCard);
+    globalArray.push(editTaskData);
+    localStorage.setItem("tasky",JSON.stringify({cards:globalArray}));
+    
+};
+
+function removeElementById(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.remove();
+    }
 };
 
 
