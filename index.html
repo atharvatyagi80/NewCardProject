@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>   
 </head>
-<body onload="loadInitialTaskCard()">
+<body onload="loadInitialTaskCard()" id="mainbody">
 
     
   
@@ -54,7 +54,13 @@
     </div>
   </div>
 
-
+  <!--New Modal to be added-->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div id="modalDialog">
+    </div>
+  </div>
+  </div>
     <!--Navbar-->
     <nav class="navbar navbar-expand-md bg-body-tertiary navbar bg-dark border-bottom border-body shadow" data-bs-theme="dark">
         <div class="container-fluid">
